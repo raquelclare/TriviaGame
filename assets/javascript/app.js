@@ -3,7 +3,7 @@ var questions = [
 	{
 		question: "The United Kingdom is comprised of how many countries?",
 		choices: ["8", "5", "4", "6"],
-		answer: "4"
+		answer: "4",
 	},
 	{
 		question: "Which of the following countries do not border France?",
@@ -33,22 +33,22 @@ var questions = [
 	{
 		question: "The biggest desert in the world is. . ?",
 		choices: ["Arabian", "Sahara", "Great Australian"],
-		answer: ["Sahara"]
+		answer: "Sahara"
 	},
 	{
 		question: "What is the approximate size of Earth's equator?",
 		choices: ["31,069 mi", "18,641 mi", "12427 mi", "24855 mi"],
-		answer: ["24855 mi"]
+		answer: "24855 mi"
 	},
 	{
 		question: "This specifies a location’s distance north or south of the equator.",
 		choices: ["Latitude", "Longitude"],
-		answer: ["Latitude"]
+		answer: "Latitude"
 	},
 	{
 		question: "Which is the longest river in the U.S.?",
 		choices: ["Colorado River", "Yukon River", "Missouri River"],
-		answer: ["Missouri River"]
+		answer: "Missouri River"
 	}	
 ];
 
@@ -58,6 +58,7 @@ console.log('hello');
 // Creating timer
 var intervalId;
 
+// Could I create a timer that shows the time in minutes and seconds?
 // var timer = {
 
 // 	time: 120
@@ -65,7 +66,7 @@ var intervalId;
 // 	// $("#timer").prepend("02:00");
 // };
 
-var time = 120;
+var time = 10;
 // var timer = setTimeout(function() {
 
 // });
@@ -78,13 +79,16 @@ function decrement() {
 	time--;
 	$("#timer").html("<h3>Seconds remaining:<br>" + time + "</h3>");
 	if (time === 0){
-		stop();
-		alert("Time's up!");
+		alert("Times up!")
+		$("#game").hide();
+		$("#submit").hide();
+		$("#timer").hide();
+		// I could definitely could consolidate all of this code if I wanted to
+		$("#stats").append("<h2>All Done!</h2");
+		$("#stats").append("<h3>" + "Correct Answers: " + correctAnswers + "</h3");
+		$("#stats").append("<h3>" + "Incorrect Answers: " + incorrectAnswers + "</h3");
+		$("#stats").append("<h3>" + "Unanswered: " + unanswered + "</h3");
 	}
-};
-
-function stop(){
-	clearInterval(intervalId);
 };
 
 // jQuery to run game when we click the "start" button.
@@ -98,12 +102,11 @@ $("#start").click(function() {
 			// Looping through each object in the questions array to display the value at the 'choices' key
 			for (j = 0; j < questions[i].choices.length; j++){
 				// Appending the values at the choices key and applying a radio button
-				$("#game").append("<form><input type='radio' name='choice' value='" + questions[j].choices[j] + "'/>" 
-					+ questions[i].choices[j] + "</form><br>");
+				$("#game").append("<input type='radio' name='" + questions[i].answer + "' value='" + questions[i].choices[j] + "'>" 
+					+ questions[i].choices[j] + "<br>");
 		}
 	}
-	// Prepend the timer
-	// $("timer").prepend(timer);
+	// Run the timer when the start button is clicked
 	run();
 	// Dynamically adding a 'submit' button into the submit div, to be displayed after the questions
 	$("#submit").append("<button id='submit-button' class='btn btn-success' type='button'>Submit!</button>");
@@ -129,15 +132,9 @@ $("#submit").click(function() {
 	console.log("Is this working?");
 });
 
-
-
-// function stopGame() {
-
-// };
-
 // Stats page should display after timer is done or submit button is clicked
 // Need to compare choice selcted against correct answer and update the stats accordingly
-var choice = questions[i].choices[j];
+var choice = getElementById(value(questions[i].choices[j]));
 if (choice === questions[i].answer){
 	correctAnswers++;
 	unanswered--;
