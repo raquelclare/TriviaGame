@@ -1,4 +1,4 @@
-
+// Create object array holding my question, choices, and correct answer
 var questions = [
 	{
 		question: "The United Kingdom is comprised of how many countries?",
@@ -51,34 +51,62 @@ var questions = [
 		answer: ["Missouri River"]
 	}	
 ];
+
 // Just ensuring that my js file is connected to the html
 console.log('hello');
-// var intervalId;
+
+// Creating timer
+var intervalId;
 
 // var timer = {
 
-// 	time:
+// 	time: 120
 // 	// Start of the timer should be 2 minutes and count down.
-// 	$("#timer").html("02:00");
+// 	// $("#timer").prepend("02:00");
 // };
 
-// jQuery to run game when we click the "start" button.
+var time = 120;
+// var timer = setTimeout(function() {
 
+// });
+
+function run() {
+	intervalId = setInterval(decrement, 1000);
+};
+
+function decrement() {
+	time--;
+	$("#timer").html("<h3>Seconds remaining:<br>" + time + "</h3>");
+	if (time === 0){
+		stop();
+		alert("Time's up!");
+	}
+};
+
+function stop(){
+	clearInterval(intervalId);
+};
+
+// jQuery to run game when we click the "start" button.
 $("#start").click(function() {
+	// Hide the start button
 	$("#start").hide();
-	// Looping through questions obj array to display the value at the 'question' key and appending them
+	// Looping through each index (an object) in the questions array 
 	for (i = 0; i < questions.length; i++) {
+		//  Appending the value of the 'question' key and appending it
 		$("#game").append(questions[i].question + "<br>");
-			// Looping through questions obj array to display the value at the 'choices' key and appending them after the corresponding question
+			// Looping through each object in the questions array to display the value at the 'choices' key
 			for (j = 0; j < questions[i].choices.length; j++){
-				$("#game").append("<form><input type='radio' value='" + questions[j].choices[j] + "'>" 
+				// Appending the values at the choices key and applying a radio button
+				$("#game").append("<form><input type='radio' name='choice' value='" + questions[j].choices[j] + "'/>" 
 					+ questions[i].choices[j] + "</form><br>");
 		}
 	}
+	// Prepend the timer
+	// $("timer").prepend(timer);
+	run();
 	// Dynamically adding a 'submit' button into the submit div, to be displayed after the questions
 	$("#submit").append("<button id='submit-button' class='btn btn-success' type='button'>Submit!</button>");
-	// .click(function(){
-	// 	$("<button id='submit-button' type='button'> </button>");
 });
 
 // Variables to compare correct/incorrect/unaswered questions and answers
@@ -90,6 +118,8 @@ var unanswered = 10;
 $("#submit").click(function() {
 	$("#game").hide();
 	$("#submit").hide();
+	stop();
+	$("#timer").hide();
 	$("#stats").append("<h2>All Done!</h2");
 	$("#stats").append("<h3>" + "Correct Answers: " + correctAnswers + "</h3");
 	$("#stats").append("<h3>" + "Incorrect Answers: " + incorrectAnswers + "</h3");
@@ -106,3 +136,12 @@ $("#submit").click(function() {
 // };
 
 // Stats page should display after timer is done or submit button is clicked
+// Need to compare choice selcted against correct answer and update the stats accordingly
+var choice = questions[i].choices[j];
+if (choice === questions[i].answer){
+	correctAnswers++;
+	unanswered--;
+}else {
+	incorrectAnswers++;
+	unanswered--;
+}
