@@ -58,13 +58,6 @@ var questions = [{
 // Variable for the interval
 var intervalId;
 
-// Could I create a timer that shows the time in minutes and seconds?
-// var timer = {
-// 		time: 120
-// 	// Start of the timer should be 2 minutes and count down.
-// 	// $("#timer").prepend("02:00");
-// };
-
 // Time set to 120 seconds
 var time = 120;
 // Function run that starts my timer after 1 second after the start button is clicked (see below)
@@ -135,11 +128,14 @@ function check() {
     var choice = radios.filter(":checked").map(function() {
     // Creating an empty object where we will push all of the answered questions into
     var choicesObj = {}
-    // Creating a variable 
+    // Creating a variable equal to the 'name' attribute found in my above for loop which then points to questions[i].name which is the question number (Q1 Q2 Q3 etc)
     var questionNumber = $(this).attr("name");
+    // Creating a variable equal to the value at questions[i].choices[j]
     var choiceSelected = $(this).val();
+    // Creates a variable that takes questionNumber, slices the "Q" off to get just the number and then decrements by 1 to get the index of that same question. So Q1 === [0]
     var questionIndex = questionNumber.slice(-1) - 1;
 
+    // We are now pushing into the choicesObj object by assigning key-value pairs using specific syntax:
     choicesObj.questionNumber = questionNumber;
     choicesObj.choiceSelected = choiceSelected;
     choicesObj.questionIndex = questionIndex;
@@ -152,22 +148,63 @@ function check() {
     // console.log(this);
     // console.log(check);
 
-    // Looping through choice since it was the returned array of the questions answered by user
+    // Looping through choice (where the choicesObj object is stored) since it was the returned array of the questions answered by user
     for (var i = 0; i < choice.length; i++) {
+    	// Creating variable to store userGuess as the value at the chosen answer
     	var userGuess = choice[i].choiceSelected;
+    	// Creating variable masterIndex which take the index found in questionIndex and plugs into the choice array, returning another number
     	var masterIndex = choice[i].questionIndex;
-    	// masterIndex returns a number, that number is plugged into my questions array at the corresponding index, and I take the answer key and grab the value
+    	// Creating variable correctAnswer such that masterIndex returns a number, that plugs into my questions array at the corresponding index, and then finds the 'answer' key and grabs the value
     	var correctAnswer = questions[masterIndex].answer;
-
+    	// Comparing userGuess to correctAnswer, if true
     	if (userGuess === correctAnswer) {
+    		// Increment the correctAnswers variable by 1, displayed on the stats page
     		correctAnswers++;
+    		// Decrement unanswered variable by 1, displayed on the stats page
     		unanswered--;
+    	// If false
     	}else {
+    		// Incremement incorrectAnswers by 1, displayed ont he stats page
     		incorrectAnswers++;
+    		// Decrement unanswered variable by 1, displayed on the stats page
     		unanswered--;
     	}
     }
 }
+
+// Takes you to the Stats page when renderStats is called (submit button or after timer runs out)
+function renderStats() {
+    // Hiding the game, submit and timer divs
+    $("#game").hide();
+    $("#submit").hide();
+    $("#timer").hide();
+    // Appending the HTML needed to display results
+    $("#stats").append("<h2>All Done!</h2");
+    $("#stats").append("<h3>" + "Correct Answers: " + correctAnswers + "</h3");
+    $("#stats").append("<h3>" + "Incorrect Answers: " + incorrectAnswers + "</h3");
+    $("#stats").append("<h3>" + "Unanswered: " + unanswered + "</h3");
+};
+
+// !!!!!NOTE TO TA: For some reason my Q10 is not working! It cannot find the answer for that question. If you don't select an answer for the very last
+// question then it works as expected. I could not figure out the issue in time!
+
+
+
+
+
+
+
+
+// ============================================================================================
+
+// Code NOT used
+
+// Could I create a timer that shows the time in minutes and seconds?
+// var timer = {
+// 		time: 120
+// 	// Start of the timer should be 2 minutes and count down.
+// 	// $("#timer").prepend("02:00");
+// };
 
 // if (choice === questions[i].answer){
 // 	correctAnswers++;
@@ -188,17 +225,3 @@ function check() {
 
 // var choice = $('input[name="' + questions[i].answer + '"]:checked').val();
 // console.log(choice);
-
-
-// Takes you to the Stats page when renderStats is called (submit button or after timer runs out)
-function renderStats() {
-    // Hiding the game, submit and timer divs
-    $("#game").hide();
-    $("#submit").hide();
-    $("#timer").hide();
-    // Appending the HTML needed to display results
-    $("#stats").append("<h2>All Done!</h2");
-    $("#stats").append("<h3>" + "Correct Answers: " + correctAnswers + "</h3");
-    $("#stats").append("<h3>" + "Incorrect Answers: " + incorrectAnswers + "</h3");
-    $("#stats").append("<h3>" + "Unanswered: " + unanswered + "</h3");
-};
