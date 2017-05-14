@@ -52,7 +52,7 @@ var questions = [{
 }];
 
 // Just ensuring that my js file is connected to the html
-console.log('hello');
+//console.log('hello');
 
 // Creating timer
 // Variable for the interval
@@ -120,14 +120,14 @@ $("#submit").click(function() {
     check();
     // Calls the renderStats function to take you to the stats page
     renderStats();
-    console.log("Is this working?");
+    // console.log("Is this working?");
 
 });
 
 // Stats page should display after timer is done or submit button is clicked
 // Need to compare choice selcted against correct answer and update the stats accordingly
 function check() {
-	debugger
+	// debugger
 	// Setting up variables for checking
 	// Creating a variable to grab all radio buttons
     var radios = $("input[type='radio']");
@@ -150,13 +150,13 @@ function check() {
     
     // console.log(choice);
     // console.log(this);
-    console.log(check);
+    // console.log(check);
 
     // Looping through choice since it was the returned array of the questions answered by user
     for (var i = 0; i < choice.length; i++) {
     	var userGuess = choice[i].choiceSelected;
     	var masterIndex = choice[i].questionIndex;
-    	// masterIndex returns a number, that number is plugged into my questions array, and I take the answer key and grab the value
+    	// masterIndex returns a number, that number is plugged into my questions array at the corresponding index, and I take the answer key and grab the value
     	var correctAnswer = questions[masterIndex].answer;
 
     	if (userGuess === correctAnswer) {
