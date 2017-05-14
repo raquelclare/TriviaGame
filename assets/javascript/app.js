@@ -59,7 +59,7 @@ var questions = [{
 var intervalId;
 
 // Time set to 120 seconds
-var time = 120;
+var time = 5;
 // Function run that starts my timer after 1 second after the start button is clicked (see below)
 function run() {
     // Setting the interval to the decrement function after 1 second
@@ -73,7 +73,9 @@ function decrement() {
     // When time is equal to zero--> alert and go to the stats page
     if (time === 0) {
         alert("Times up!")
-            // Calls the renderStats function (below)
+        // Need to check the answers
+        check();
+        // Calls the renderStats function (below)
         renderStats();
     }
 };
