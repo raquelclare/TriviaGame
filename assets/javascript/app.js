@@ -59,7 +59,7 @@ var questions = [{
 var intervalId;
 
 // Time set to 120 seconds
-var time = 5;
+var time = 120;
 // Function run that starts my timer after 1 second after the start button is clicked (see below)
 function run() {
     // Setting the interval to the decrement function after 1 second
